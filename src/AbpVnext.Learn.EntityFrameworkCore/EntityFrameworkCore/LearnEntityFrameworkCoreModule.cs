@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
-using Volo.Abp.EntityFrameworkCore.MySQL;
-using Microsoft.EntityFrameworkCore;
 
 namespace AbpVnext.Learn.EntityFrameworkCore
 {
@@ -19,20 +18,20 @@ namespace AbpVnext.Learn.EntityFrameworkCore
                 options.AddDefaultRepositories(includeAllEntities: true);
             });
 
-
             Configure<AbpDbContextOptions>(options =>
             {
-                options.Configure(ctx =>
-                {
-                    if (ctx.ExistingConnection != null)
-                    {
-                        ctx.DbContextOptions.UseMySql(ctx.ExistingConnection);
-                    }
-                    else
-                    {
-                        ctx.DbContextOptions.UseMySql(ctx.ConnectionString);
-                    }
-                });
+                options.UseSqlServer();
+                //options.Configure(ctx =>
+                //{
+                //    if (ctx.ExistingConnection != null)
+                //    {
+                //        ctx.DbContextOptions.UseMySql(ctx.ExistingConnection);
+                //    }
+                //    else
+                //    {
+                //        ctx.DbContextOptions.UseMySql(ctx.ConnectionString);
+                //    }
+                //});
             });
         }
     }

@@ -3,7 +3,9 @@ using System;
 using AbpVnext.Learn.EntityFrameworkCore.DbMigrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Volo.Abp.EntityFrameworkCore;
 
 namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
 {
@@ -14,22 +16,25 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AbpVnext.Learn.Entitys.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<string>("ExtraProperties")
-                        .HasColumnName("ExtraProperties")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
 
                     b.Property<DateTime>("create_time")
                         .HasColumnType("datetime");
@@ -77,34 +82,6 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
                     b.ToTable("UserAuthorizeLists");
                 });
 
-            modelBuilder.Entity("AbpVnext.Learn.Entitys.User", b =>
-                {
-                    b.OwnsOne("AbpVnext.Learn.Entitys.UserNotImportantInfo", "userNotImportantInfo", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<string>("address")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                            b1.Property<int>("age")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("avatar")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                            b1.Property<int>("sex")
-                                .HasColumnType("int");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-                });
-
             modelBuilder.Entity("AbpVnext.Learn.Entitys.UserAuthorizeList", b =>
                 {
                     b.HasOne("AbpVnext.Learn.Entitys.User", null)
@@ -112,6 +89,11 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AbpVnext.Learn.Entitys.User", b =>
+                {
+                    b.Navigation("UserAuthorizeLists");
                 });
 #pragma warning restore 612, 618
         }

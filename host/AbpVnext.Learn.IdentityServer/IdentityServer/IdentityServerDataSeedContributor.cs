@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -142,7 +142,7 @@ namespace AbpVnext.Learn.IdentityServer
             string postLogoutRedirectUri = null,
             IEnumerable<string> permissions = null)
         {
-            var client = await _clientRepository.FindByCliendIdAsync(name);
+            var client = await _clientRepository.FindByClientIdAsync(name);
             if (client == null)
             {
                 client = await _clientRepository.InsertAsync(

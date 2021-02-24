@@ -3,46 +3,40 @@ using System;
 using AbpVnext.Learn.EntityFrameworkCore.DbMigrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Volo.Abp.EntityFrameworkCore;
 
 namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
 {
     [DbContext(typeof(DbM_LearnDbContext))]
-    [Migration("20200418134438_init")]
-    partial class init
+    [Migration("20210224051728_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("AbpVnext.Learn.Entitys.Test", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Test");
-                });
+                .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AbpVnext.Learn.Entitys.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<string>("ExtraProperties")
-                        .HasColumnName("ExtraProperties")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
 
                     b.Property<DateTime>("create_time")
                         .HasColumnType("datetime");
@@ -97,6 +91,11 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AbpVnext.Learn.Entitys.User", b =>
+                {
+                    b.Navigation("UserAuthorizeLists");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +12,7 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<LearnDbContext>()
-                .UseMySql(configuration.GetConnectionString("Learn"));
+                .UseSqlServer(configuration.GetConnectionString("Learn"));
 
             return new DbM_LearnDbContext(builder.Options);
         }

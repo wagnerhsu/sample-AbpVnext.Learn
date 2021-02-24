@@ -1,37 +1,24 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
 {
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Test",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Test", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    ExtraProperties = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     user_name = table.Column<string>(type: "varchar(50)", nullable: false),
                     user_phone = table.Column<string>(type: "varchar(20)", nullable: false),
                     pass_word = table.Column<string>(type: "varchar(50)", nullable: false),
                     user_status = table.Column<int>(type: "int", nullable: false),
-                    create_time = table.Column<DateTime>(type: "datetime", nullable: false)
+                    create_time = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,9 +49,6 @@ namespace AbpVnext.Learn.EntityFrameworkCore.DbMigrations.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Test");
-
             migrationBuilder.DropTable(
                 name: "UserAuthorizeLists");
 
