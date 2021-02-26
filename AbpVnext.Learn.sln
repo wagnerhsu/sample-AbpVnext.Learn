@@ -43,7 +43,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpVnext.Learn.IdentityServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpVnext.Learn.Host.Shared", "host\AbpVnext.Learn.Host.Shared\AbpVnext.Learn.Host.Shared.csproj", "{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbpVnext.Learn.EntityFrameworkCore.DbMigrations", "src\AbpVnext.Learn.EntityFrameworkCore.DbMigrations\AbpVnext.Learn.EntityFrameworkCore.DbMigrations.csproj", "{F76D7391-799F-4FE1-A223-6821C6F7707F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpVnext.Learn.EntityFrameworkCore.DbMigrations", "src\AbpVnext.Learn.EntityFrameworkCore.DbMigrations\AbpVnext.Learn.EntityFrameworkCore.DbMigrations.csproj", "{F76D7391-799F-4FE1-A223-6821C6F7707F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E5B7640-08FB-40EF-8CEC-C272EDA275B8}"
+	ProjectSection(SolutionItems) = preProject
+		common.props = common.props
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
